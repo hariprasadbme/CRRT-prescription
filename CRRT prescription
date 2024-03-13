@@ -1,0 +1,37 @@
+def calculate_crrt_parameters(weight_kg, urine_output_ml_hr, serum_creatinine_mg_dl, desired_fluid_removal_ml_hr, desired_solute_clearance_ml_min):
+    # Calculate blood flow rate (Qb) based on patient weight
+    blood_flow_rate_ml_min = weight_kg * 5  # Example formula, adjust as per clinical practice
+
+    # Calculate dialysate flow rate (Qd) based on patient urine output and serum creatinine levels
+    if urine_output_ml_hr > 0:
+        dialysate_flow_rate_ml_hr = urine_output_ml_hr * 2  # Example formula, adjust as per clinical practice
+    else:
+        # If no urine output, use serum creatinine levels to estimate dialysate flow rate
+        dialysate_flow_rate_ml_hr = serum_creatinine_mg_dl * 10  # Example formula, adjust as per clinical practice
+
+    # Calculate ultrafiltration rate (Quf) based on desired fluid removal rate
+    ultrafiltration_rate_ml_hr = desired_fluid_removal_ml_hr
+
+    # Calculate solute clearance rate based on desired solute clearance
+    solute_clearance_ml_min = desired_solute_clearance_ml_min
+
+    return {
+        "blood_flow_rate_ml_min": blood_flow_rate_ml_min,
+        "dialysate_flow_rate_ml_hr": dialysate_flow_rate_ml_hr,
+        "ultrafiltration_rate_ml_hr": ultrafiltration_rate_ml_hr,
+        "solute_clearance_ml_min": solute_clearance_ml_min
+    }
+
+# Example usage
+patient_weight = 70  # kg
+patient_urine_output = 1000  # ml/hr
+patient_serum_creatinine = 2.5  # mg/dl
+desired_fluid_removal = 2000  # ml/hr
+desired_solute_clearance = 20  # ml/min
+
+crrt_parameters = calculate_crrt_parameters(patient_weight, patient_urine_output, patient_serum_creatinine, desired_fluid_removal, desired_solute_clearance)
+print("CRRT Prescription Parameters:")
+print("Blood Flow Rate (Qb): {} ml/min".format(crrt_parameters["blood_flow_rate_ml_min"]))
+print("Dialysate Flow Rate (Qd): {} ml/hr".format(crrt_parameters["dialysate_flow_rate_ml_hr"]))
+print("Ultrafiltration Rate (Quf): {} ml/hr".format(crrt_parameters["ultrafiltration_rate_ml_hr"]))
+print("Solute Clearance Rate: {} ml/min".format(crrt_parameters["solute_clearance_ml_min"]))
